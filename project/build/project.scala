@@ -25,6 +25,13 @@ class Unfiltered(info: ProjectInfo) extends ParentProject(info) {
     lazy val dispatch = dispatchDependency
   }, server)
   
+  lazy val scalate = project("scalate", "Scalate Integration", new UnfilteredModule(_){
+      val scalateLibs = "org.fusesource.scalate" % "scalate-core" % "1.2"
+      val scalaTest = "org.scalatest" % "scalatest" % "1.2-for-scala-2.8.0.final-SNAPSHOT" % "test"
+      val scalaCompiler = "org.scala-lang" % "scala-compiler" % "2.8.0" % "test"
+      override def repositories = Set(ScalaToolsSnapshots)
+  })
+  
   def specsDependency = 
     if (buildScalaVersion startsWith "2.7.") 
       "org.scala-tools.testing" % "specs" % "1.6.2.2"
