@@ -20,12 +20,15 @@ class Unfiltered(info: ProjectInfo) extends ParentProject(info) {
     val jetty7 = "org.eclipse.jetty" % "jetty-ajp" % jetty_version
   }, server)
   lazy val demo = project("demo", "Unfiltered Demo", new UnfilteredModule(_), server)
+  lazy val scalateDemo = project("demo-scalate", "Unfiltered Scalate Demo", new UnfilteredModule(_){
+      val slf4j = "org.slf4j" % "slf4j-simple" % "1.6.0"
+  }, server, scalate)
   lazy val spec = project("spec", "Unfiltered Spec", new DefaultProject(_) with sxr.Publish {
     lazy val specs = specsDependency
     lazy val dispatch = dispatchDependency
   }, server)
   
-  lazy val scalate = project("scalate", "Scalate Integration", new UnfilteredModule(_){
+  lazy val scalate = project("scalate", "Unfiltered Scalate Integration", new UnfilteredModule(_){
       val scalateLibs = "org.fusesource.scalate" % "scalate-core" % "1.2"
       val scalaTest = "org.scalatest" % "scalatest" % "1.2-for-scala-2.8.0.final-SNAPSHOT" % "test"
       val scalaCompiler = "org.scala-lang" % "scala-compiler" % "2.8.0" % "test"
